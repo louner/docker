@@ -1,0 +1,49 @@
+#install
+sudo apt-get install docker.io
+
+#pull an image file of ubuntu 14.04 from docker hub
+sudo docker pull ubuntu:14.04
+
+#create and execute a container on an image file, run bash
+sudo docker run -i -t ubuntu:14.04 /bin/bash
+
+#list image files
+sudo docker images
+
+#change an image file then commit it to a new image file
+sudo docker run -it ubuntu:14.04
+
+#root@123456:/# apt-get install -y python
+#root@123456:/# exit
+
+sudo docker commit -m 'install python' 123456 training/louner:v1	# 123456 -> container ID, training/louner:v1 -> tag of new image file
+
+#build an image from Dockerfile
+mkdir dockerfiles
+cd dockerfiles
+touch Dockerfile
+
+mkdir tmp
+echo 'hello world' > tmp/file1
+
+#FROM training/louner:v1
+#MAINTAINER louner <lounera@gmail.com>
+#RUN apt-get install -y python
+#ADD ./tmp /home
+
+sudo docker build -t 'training/louner:v2' ./dockerfiles/
+
+#list running container
+sudo docker ps
+
+#list all container
+sudo docker ps -a
+
+#list container metric
+sudo docker stats CONTAINERID
+
+#start a container interactively
+sudo docker start -i CONTAINERID
+
+#mount to host directory
+docker run -v /home/louner/working/docker:/opt/mnt -it basic:v2
